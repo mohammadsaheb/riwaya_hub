@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favorites</title>
+
+    <!-- FontAwesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS Files -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/bootstrap-icons.css" rel="stylesheet" />
+    <link href="../css/templatemo-ebook-landing.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./fav.css" />
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-expand-lg"
+      style="background-color: rgb(19, 19, 19)"
+    >
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <i class="navbar-brand-icon bi-book me-2"></i>
+          <span>RiwayaHub</span>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-lg-auto me-lg-4">
+            <li class="nav-item">
+              <a class="nav-link click-scroll" href="../index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link click-scroll" href="../about.html">About us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link click-scroll" href="#">Favorite</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link click-scroll" href="./comment/com.html"
+                >Comments</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link click-scroll" href="../contact.html"
+                >Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <h1>My Favorite Books</h1>
+    <div
+      id="favoritesContainer"
+      class="book-cards"
+      style="display: flex; flex-wrap: wrap; justify-content: center"
+    ></div>
+
+    <footer id="footer">
+      <p>&copy; 2025 RiwayaHub. All rights reserved.</p>
+      <p>
+        Email: info@RiwayaHub.com |
+        <span id="phone">Phone: +962 6 1234 5678</span>
+      </p>
+      <p class="social-icons-footer">
+        Follow us on:
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+      </p>
+    </footer>
+
+    <script>
+      window.onload = function () {
+        const currentUser = localStorage.getItem("currentUser"); // استرجاع currentUser
+        if (!currentUser) {
+          alert("Please log in to view favorites.");
+          return;
+        }
+
+        let readers_log = JSON.parse(localStorage.getItem("readers_log")) || [];
+        let userIndex = readers_log.findIndex(
+          (user) => user.email === currentUser
+        );
+
+        if (
+          userIndex !== -1 &&
+          Array.isArray(readers_log[userIndex].fav_books)
+        ) {
+          const container = document.getElementById("favoritesContainer");
+          readers_log[userIndex].fav_books.forEach((book) => {
+            const card = document.createElement("div");
+            card.className = "col-md-4 card";
+            card.setAttribute("data-id", book.id);
+
+            const img = document.createElement("img");
+            img.src = book.imgSrc;
+            img.alt = "Book Cover";
+            img.className = "d-block w-100";
+
+            const info = document.createElement("div");
+            info.innerHTML = book.more + book.love;
+            info.className = "info";
+
+            const heartButton = info.querySelector(".heart");
+            if (heartButton) {
+              heartButton.classList.add("liked");
+              heartButton.addEventListener("click", () => {
+                removeFromFavorites(book.id);
+              });
+            }
+
+            card.appendChild(img);
+            card.appendChild(info);
+
+            container.appendChild(card);
+          });
+        }
+      };
+
+      function removeFromFavorites(bookId) {
+        const currentUser = localStorage.getItem("currentUser"); // استرجاع currentUser
+        if (!currentUser) {
+          alert("Please log in to remove favorites.");
+          return;
+        }
+
+        let readers_log = JSON.parse(localStorage.getItem("readers_log")) || [];
+        let userIndex = readers_log.findIndex(
+          (user) => user.email === currentUser
+        );
+
+        if (userIndex !== -1) {
+          let favorites = readers_log[userIndex].fav_books;
+          favorites = favorites.filter((book) => book.id !== bookId);
+          readers_log[userIndex].fav_books = favorites;
+
+          localStorage.setItem("readers_log", JSON.stringify(readers_log));
+          window.location.reload();
+        }
+      }
+    </script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+    <script src="js/click-scroll.js"></script>
+    <script src="js/custom.js"></script>
+  </body>
+</html>

@@ -1,0 +1,166 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#favoritesContainer {
+    flex: 1; /* يدفع الفوتر للأسفل */
+}
+
+footer {
+    background-color: rgb(19, 19, 19);
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    margin-top: auto;
+}
+
+
+
+.container1 {
+    width: 50%;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    margin-top: 80px; /* Adjust this value based on your navbar height */
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input, textarea, select, button {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background: #e76f51;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #c76249;
+}
+
+/* Comment Box Styles */
+.comment-box {
+    display: flex;
+    align-items: flex-start;
+    background: #f1f1f1;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    flex-wrap: wrap;
+}
+
+.profile-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+}
+
+.comment-content {
+    flex: 1;
+}
+
+.comment-box strong {
+    color: #333;
+}
+
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+/* Delete Button Styles */
+.delete-btn {
+    background: #e76f51;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.delete-btn:hover {
+    background: #c76249;
+}
+
+/* Responsive Design - Mobile First */
+@media (max-width: 600px) {
+    .container1 {
+        width: 90%; /* Adjust container width */
+        padding: 15px;
+    }
+
+    .comment-box {
+        flex-direction: column; /* Stack profile photo and content on small screens */
+        align-items: flex-start;
+    }
+
+    .profile-photo {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 5px;
+    }
+
+    .comment-content {
+        margin-left: 0;
+    }
+
+    .delete-btn {
+        margin-left: 0;
+        margin-top: 5px;
+        width: 100%; /* Full width button on mobile */
+        text-align: center;
+    }
+
+    select {
+        width: 100%; /* Make the select element take full width */
+    }
+
+    input, textarea, button {
+        width: 100%; /* Make input elements take full width */
+    }
+}
+
+/* Larger Devices (Tablets and Desktops) */
+@media (min-width: 601px) {
+    .container1 {
+        width: 50%; /* Standard width for tablets and desktops */
+    }
+
+    .comment-box {
+        flex-direction: row; /* Side-by-side profile photo and comment content */
+        align-items: center;
+    }
+
+    .delete-btn {
+        margin-left: 10px;
+    }
+}
